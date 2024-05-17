@@ -1,7 +1,7 @@
 // Import necessary modules
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
-import generate_token_and_set_cookie from "../utils/generateToken.js";
+import generate_token_and_set_cookie from "../utils/generate_token.js";
 
 // Signup controller
 export const signup = async (req, res) => {
