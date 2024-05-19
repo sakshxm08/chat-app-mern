@@ -28,13 +28,13 @@ const FloatingLabelInput = ({
         id={id}
         value={value}
         onChange={onChange}
-        className="w-full block leading-5 relative pt-4 pb-2 text-gray-800  dark:bg-gray-700 border-b border-gray-300 focus:border-gray-500 dark:border-gray-400 overflow-x-auto focus:outline-none focus:border-primary-600 focus:ring-0 dark:text-gray-200 dark:focus:border-primary-200 peer text-sm"
+        className="w-full block leading-5 relative pt-4 pb-2 text-gray-800  dark:bg-dark border-b border-gray-300 focus:border-gray-500 dark:border-gray-400 overflow-x-auto focus:outline-none focus:border-primary-600 focus:ring-0 dark:text-gray-200 dark:focus:border-primary-200 peer text-sm"
         placeholder=" "
         required
       />
       <label
         htmlFor={id}
-        className="absolute text-gray-400 peer-focus:text-gray-600 font-light peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 dark:text-gray-400 duration-300 transform -translate-y-5 scale-75 top-4 z-10 origin-[0] peer-focus:text-primary-600 dark:peer-focus:text-primary-200 peer-focus:scale-75 peer-valid:scale-75 peer-focus:-translate-y-5 peer-valid:-translate-y-5 peer-invalid:text-error-600 dark:peer-invalid:text-error-200 text-sm"
+        className="absolute text-gray-400 peer-focus:text-gray-600 dark:peer-focus:text-gray-200 font-light peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 dark:text-gray-400 duration-300 transform -translate-y-5 scale-75 top-4 z-10 origin-[0] peer-focus:text-primary-600 dark:peer-focus:text-primary-200 peer-focus:scale-75 peer-valid:scale-75 peer-focus:-translate-y-5 peer-valid:-translate-y-5 peer-invalid:text-error-600 dark:peer-invalid:text-error-200 text-sm"
       >
         {label}
       </label>

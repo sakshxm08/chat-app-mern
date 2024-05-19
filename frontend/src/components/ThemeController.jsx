@@ -1,8 +1,42 @@
+import { useEffect, useRef, useState } from "react";
+
 const ThemeController = () => {
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+
+  const checkboxRef = useRef(null);
+  console.log(theme);
+  useEffect(() => {
+    if (
+      theme === "dark" ||
+      (!localStorage.getItem("theme") &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches)
+    ) {
+      document.documentElement.classList.add("dark");
+      checkboxRef.current.checked = true;
+    } else {
+      document.documentElement.classList.remove("dark");
+      checkboxRef.current.checked = false;
+    }
+  }, [theme]);
   return (
     <label className="swap swap-rotate">
       {/* this hidden checkbox controls the state */}
-      <input type="checkbox" className="theme-controller" value="synthwave" />
+      <input
+        type="checkbox"
+        className="theme-controller"
+        value="synthwave"
+        ref={checkboxRef}
+        onChange={(e) => {
+          if (e.target.checked) {
+            setTheme("dark");
+            localStorage.setItem("theme", "dark");
+          } else {
+            setTheme("light");
+            localStorage.setItem("theme", "light");
+          }
+          console.log(e.target.checked);
+        }}
+      />
 
       {/* sun icon */}
       <svg
@@ -15,7 +49,7 @@ const ThemeController = () => {
 
       {/* moon icon */}
       <svg
-        className="swap-on fill-current w-8 h-8"
+        className="swap-on fill-white w-8 h-8"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
       >

@@ -7,7 +7,7 @@ const Navbar = () => {
 
   const { logout } = useLogout();
   return (
-    <div className="navbar bg-base-100 px-4 rounded-xl shadow dark:bg-dark">
+    <div className="navbar bg-base-100 px-4 rounded-xl shadow dark:text-gray-100 dark:bg-dark">
       <div className="flex-1">
         <a className="text-xl font-semibold">Buzz</a>
       </div>
@@ -26,18 +26,18 @@ const Navbar = () => {
             </div>
             <ul
               tabIndex={0}
-              className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
+              className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 dark:bg-dark rounded-box w-52"
             >
-              <li>
-                <a className="justify-between">
-                  Profile
-                  <span className="badge">New</span>
-                </a>
+              <li className="dark:hover:bg-slate-900 transition-all rounded-lg">
+                <a className="justify-between">Profile</a>
               </li>
-              <li>
+              <li className="dark:hover:bg-slate-900 transition-all rounded-lg">
                 <a>Settings</a>
               </li>
-              <li onClick={logout}>
+              <li
+                className="dark:hover:bg-slate-900 transition-all rounded-lg"
+                onClick={logout}
+              >
                 <a>Logout</a>
               </li>
             </ul>

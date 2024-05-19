@@ -41,14 +41,16 @@ const Signup = () => {
     <div className="flex w-full gap-4">
       <div className="w-1/3 h-full">
         <div className="rounded-xl p-8 flex flex-col gap-4 items-center justify-center w-full bg-base-100 dark:bg-dark h-[40rem] overflow-hidden shadow">
-          <h2 className="text-3xl font-bold">Already a user?</h2>
+          <h2 className="text-3xl font-bold dark:text-gray-100">
+            Already a user?
+          </h2>
           <Link to="/login" className="btn w-full">
             Login here
           </Link>
         </div>
       </div>
       <div className="w-2/3 h-full">
-        <div className="h-[40rem] bg-white rounded-xl p-10 flex items-center justify-center mx-auto flex-col gap-8 dark:text-gray-50">
+        <div className="h-[40rem] bg-white dark:bg-dark rounded-xl p-10 flex items-center justify-center mx-auto flex-col gap-8 dark:text-gray-50">
           <h1 className="text-5xl font-extrabold ">Create an Account</h1>
 
           <form
@@ -112,13 +114,13 @@ const Signup = () => {
               }}
             >
               <div className="relative w-full">
-                <div className="w-full block h-11 leading-5 capitalize relative pt-4 pb-2 text-gray-800  dark:bg-gray-700 border-b border-gray-300 focus:border-gray-500 dark:border-gray-400 overflow-x-auto dark:text-gray-200 peer text-sm">
+                <div className="w-full block h-11 leading-5 capitalize relative pt-4 pb-2 text-gray-800  dark:bg-dark border-b border-gray-300 focus:border-gray-500 dark:border-gray-400 overflow-x-auto dark:text-gray-200 peer text-sm">
                   {formData.gender}
                 </div>
                 <label
                   className={`absolute text-gray-400 cursor-pointer ${
                     dropdownOpen || formData.gender
-                      ? "text-gray-600 scale-75 -translate-y-5"
+                      ? "text-gray-600 dark:text-gray-100 scale-75 -translate-y-5"
                       : "scale-100 translate-y-0"
                   } font-light dark:text-gray-400 duration-300 transform top-4 z-10 origin-[0] text-sm`}
                 >
@@ -129,11 +131,14 @@ const Signup = () => {
                 </span>
               </div>
               <div
-                className={`bg-white shadow absolute w-full top-full ${
+                className={`bg-white dark:bg-slate-700 shadow absolute w-full top-full ${
                   dropdownOpen ? "scale-y-100" : "scale-y-0"
                 } transition-all origin-top flex flex-col *:p-3 *:text-sm *:transition-all *:cursor-pointer`}
               >
-                <label htmlFor="male" className="hover:bg-base-200">
+                <label
+                  htmlFor="male"
+                  className="hover:bg-base-200 dark:hover:bg-slate-600 transition-all"
+                >
                   <input
                     type="radio"
                     name="gender"
@@ -147,7 +152,10 @@ const Signup = () => {
                   />
                   Male
                 </label>
-                <label htmlFor="female" className="hover:bg-base-200">
+                <label
+                  htmlFor="female"
+                  className="hover:bg-base-200 dark:hover:bg-slate-600 transition-all"
+                >
                   <input
                     type="radio"
                     name="gender"
@@ -161,7 +169,10 @@ const Signup = () => {
                   />
                   Female
                 </label>
-                <label htmlFor="other" className="hover:bg-base-200">
+                <label
+                  htmlFor="other"
+                  className="hover:bg-base-200 dark:hover:bg-slate-600 transition-all"
+                >
                   <input
                     type="radio"
                     name="gender"
@@ -178,7 +189,7 @@ const Signup = () => {
               </div>
             </div>
             <button
-              className="bg-lime-600 w-full col-span-2 rounded-lg py-3 text-sm text-white hover:bg-lime-700 transition-all"
+              className="bg-lime-600 dark:bg-lime-700 w-full col-span-2 rounded-lg py-3 text-sm text-white hover:bg-lime-700 transition-all"
               disabled={isLoading}
             >
               {isLoading ? (

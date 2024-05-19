@@ -11,11 +11,11 @@ const MessageSection = () => {
             <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
           </div>
         </div>
-        <div className="flex flex-col w-ful">
+        <div className="flex flex-col w-full dark:text-gray-100">
           <h4 className="font-bold">John Doe</h4>
         </div>
       </div>
-      <div className="rounded-xl bg-base-200 text-sm h-ful">
+      <div className="rounded-xl bg-base-200 dark:bg-slate-700 text-sm h-ful">
         <div className="max-h-[29.5rem] px-4 pt-4 flex flex-col-reverse overflow-y-scroll ">
           <ReceivedMessage />
           <SentMessage />
