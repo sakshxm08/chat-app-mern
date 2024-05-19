@@ -1,5 +1,8 @@
 import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
 import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Navbar from "./components/Navbar";
+import Signup from "./pages/Signup";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -10,6 +13,14 @@ const App = () => {
         {
           path: "",
           element: <Home />,
+        },
+        {
+          path: "signup",
+          element: <Signup />,
+        },
+        {
+          path: "login",
+          element: <Login />,
         },
       ],
     },
@@ -22,7 +33,12 @@ const App = () => {
 };
 
 const Layout = () => {
-  return <Outlet />;
+  return (
+    <div className="p-6 flex flex-col items-center w-full gap-4">
+      <Navbar />
+      <Outlet />
+    </div>
+  );
 };
 
 export default App;
