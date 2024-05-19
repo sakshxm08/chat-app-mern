@@ -10,6 +10,8 @@ const FloatingLabelInput = ({
   inputRef = null,
   setPasswordHidden,
   passwordHidden,
+  value,
+  onChange,
 }) => {
   // Toggle Password Visibility
   const togglePass = () => {
@@ -24,6 +26,8 @@ const FloatingLabelInput = ({
         type={type}
         name={name}
         id={id}
+        value={value}
+        onChange={onChange}
         className="w-full block leading-5 relative pt-4 pb-2 text-gray-800  dark:bg-gray-700 border-b border-gray-300 focus:border-gray-500 dark:border-gray-400 overflow-x-auto focus:outline-none focus:border-primary-600 focus:ring-0 dark:text-gray-200 dark:focus:border-primary-200 peer text-sm"
         placeholder=" "
         required
@@ -57,4 +61,6 @@ FloatingLabelInput.propTypes = {
   inputRef: PropTypes.object,
   setPasswordHidden: PropTypes.func,
   passwordHidden: PropTypes.bool,
+  onChange: PropTypes.func,
+  value: PropTypes.string,
 };

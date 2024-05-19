@@ -2,9 +2,11 @@ import { useRef, useState } from "react";
 import FloatingLabelInput from "../components/FloatingLabelInput";
 import { IoChevronDown } from "react-icons/io5";
 import { Link } from "react-router-dom";
+import useSignup from "../hooks/useSignup";
+
 const Signup = () => {
   // Signup Hook
-  //   const { signup, isLoading } = useSignup();
+  const { signup, isLoading } = useSignup();
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
   // Form Details State Object
@@ -25,11 +27,16 @@ const Signup = () => {
   const pass_input = useRef();
   const conf_pass_input = useRef();
 
+  // onChange function of inputs
+  const setValues = ({ target: { name, value } }) => {
+    setFormData({ ...formData, [name]: value });
+  };
+
   // Submitting the form
-  //   const handleSignup = async (e) => {
-  //     e.preventDefault();
-  //     await signup(formData);
-  //   };
+  const handleSignup = async (e) => {
+    e.preventDefault();
+    await signup(formData);
+  };
   return (
     <div className="flex w-full gap-4">
       <div className="w-1/3 h-full">
@@ -44,18 +51,25 @@ const Signup = () => {
         <div className="h-[40rem] bg-white rounded-xl p-10 flex items-center justify-center mx-auto flex-col gap-8 dark:text-gray-50">
           <h1 className="text-5xl font-extrabold ">Create an Account</h1>
 
-          <form className="w-2/3 grid grid-cols-2 gap-4">
+          <form
+            className="w-2/3 grid grid-cols-2 gap-4"
+            onSubmit={handleSignup}
+          >
             <FloatingLabelInput
               type="text"
               name="f_name"
               id="f_name"
               label="First Name"
+              value={formData.f_name}
+              onChange={setValues}
             />
             <FloatingLabelInput
               type="text"
               name="l_name"
               id="l_name"
               label="Last Name"
+              value={formData.l_name}
+              onChange={setValues}
             />
             <FloatingLabelInput
               type="text"
@@ -63,6 +77,8 @@ const Signup = () => {
               id="username"
               label="Username"
               className="col-span-2"
+              value={formData.username}
+              onChange={setValues}
             />
             <FloatingLabelInput
               type="password"
@@ -73,6 +89,8 @@ const Signup = () => {
               inputRef={pass_input}
               passwordHidden={passHidden}
               setPasswordHidden={setPassHidden}
+              value={formData.password}
+              onChange={setValues}
             />
             <FloatingLabelInput
               type="password"
@@ -83,6 +101,8 @@ const Signup = () => {
               inputRef={conf_pass_input}
               passwordHidden={confPassHidden}
               setPasswordHidden={setConfPassHidden}
+              value={formData.conf_password}
+              onChange={setValues}
             />
             <div
               className="w-full relative z-20 col-span-2 cursor-pointer"
@@ -157,8 +177,15 @@ const Signup = () => {
                 </label>
               </div>
             </div>
-            <button className="bg-lime-600 w-full col-span-2 rounded-lg py-3 text-sm text-white hover:bg-lime-700 transition-all">
-              Sign Up
+            <button
+              className="bg-lime-600 w-full col-span-2 rounded-lg py-3 text-sm text-white hover:bg-lime-700 transition-all"
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <span className="loading loading-spinner loading-sm"></span>
+              ) : (
+                "Sign Up"
+              )}
             </button>
           </form>
         </div>
