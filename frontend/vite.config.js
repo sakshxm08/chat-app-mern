@@ -11,6 +11,7 @@ export default defineConfig({
   },
   "/socket.io": {
     target: "http://localhost:3000", // Proxy socket.io requests
+    changeOrigin: true,
     ws: true, // Enable WebSocket proxying
   },
 });
