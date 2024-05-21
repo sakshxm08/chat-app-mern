@@ -15,7 +15,6 @@ export const AuthContextProvider = ({ children }) => {
       try {
         const res = await api.post("/auth/login");
         dispatch({ type: "LOGIN", payload: res.data });
-        console.log(res.data);
       } catch (error) {
         console.log(error);
       } finally {

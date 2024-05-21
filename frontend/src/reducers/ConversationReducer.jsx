@@ -21,8 +21,6 @@ export const ConversationReducer = (state, action) => {
         acc[date].push(message);
         return acc;
       }, {});
-      console.log(messages);
-      console.log(messagesByDates);
       return {
         ...state,
         messages,

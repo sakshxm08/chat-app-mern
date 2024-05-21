@@ -28,7 +28,6 @@ const useSignup = () => {
       if (res.data.error) throw new Error(res.data.error);
 
       Auth.dispatch({ type: "LOGIN", payload: res.data.user });
-      console.log(res.data.user);
     } catch (error) {
       toast.error(error.response.data.message);
     } finally {

@@ -1,6 +1,5 @@
 import path from "path";
 
-import dotenv from "dotenv";
 import express from "express";
 import cookieParser from "cookie-parser";
 
@@ -10,8 +9,6 @@ import userRoutes from "./routes/user.routes.js";
 
 import connect_to_mongodb from "./db/db.js";
 import { app, server } from "./socket/socket.js";
-
-dotenv.config();
 
 const __dirname = path.resolve();
 

@@ -4,7 +4,6 @@ const ThemeController = () => {
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
 
   const checkboxRef = useRef(null);
-  console.log(theme);
   useEffect(() => {
     if (
       theme === "dark" ||
@@ -34,7 +33,6 @@ const ThemeController = () => {
             setTheme("light");
             localStorage.setItem("theme", "light");
           }
-          console.log(e.target.checked);
         }}
       />
 
