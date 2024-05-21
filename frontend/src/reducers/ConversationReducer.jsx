@@ -40,7 +40,7 @@ export const ConversationReducer = (state, action) => {
         },
       };
     }
-    case "SEND_MESSAGE": {
+    case "SEND_AND_RECEIVE_MESSAGE": {
       const messages = [...state.messages, action.payload];
       const messagesByDates = messages.reduce((acc, message) => {
         const date = new Date(message.createdAt).toLocaleDateString();

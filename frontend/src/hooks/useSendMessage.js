@@ -18,7 +18,10 @@ const useSendMessage = () => {
 
       if (res.data.error) throw new Error(res.data.error);
 
-      Conversation.dispatch({ type: "SEND_MESSAGE", payload: res.data });
+      Conversation.dispatch({
+        type: "SEND_AND_RECEIVE_MESSAGE",
+        payload: res.data,
+      });
 
       return true;
     } catch (error) {

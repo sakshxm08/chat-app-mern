@@ -4,9 +4,12 @@ import MessageInput from "./MessageInput";
 import { useParams } from "react-router-dom";
 import api from "../api/api";
 import Message from "./Message";
+import useListenMessages from "../hooks/useListenMessages";
 
 const MessageSection = memo(() => {
   const Conversation = useConversationContext();
+
+  useListenMessages();
 
   const [sortedDates, setSortedDates] = useState([]);
 
@@ -42,6 +45,7 @@ const MessageSection = memo(() => {
       Conversation.dispatch({ type: "SET_MESSAGES_LOADING", payload: false });
     };
     getMessages();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contact_id]);
 
   useEffect(() => {

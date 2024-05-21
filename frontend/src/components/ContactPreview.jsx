@@ -1,12 +1,17 @@
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import useSocketContext from "../hooks/useSocketContext";
 const ContactPreview = ({ contact }) => {
+  const Socket = useSocketContext();
+
+  const isOnline = Socket.onlineUsers.includes(contact._id);
+
   return (
     <Link
       to={`/m/${contact._id}`}
       className="px-6 py-3 hover:bg-base-200 dark:hover:bg-slate-900/40 dark:text-gray-100 transition-all flex gap-4 items-center cursor-pointer"
     >
-      <div className="avatar online">
+      <div className={`avatar ${isOnline ? "online" : ""}`}>
         <div className="w-12 rounded-full">
           <img src={contact.avatar} />
         </div>
