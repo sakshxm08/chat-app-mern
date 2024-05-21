@@ -12,7 +12,8 @@ export const SocketContextProvider = ({ children }) => {
 
   useEffect(() => {
     if (Auth.user) {
-      const socket = io(import.meta.env.VITE_API_BASE_URL, {
+      const socket = io("http://buzz.sakshxm08.in", {
+        // const socket = io(import.meta.env.VITE_API_BASE_URL, {
         query: { user_id: Auth.user._id },
       });
 
