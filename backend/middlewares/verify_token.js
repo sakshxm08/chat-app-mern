@@ -14,7 +14,7 @@ export const verify_token = async (req, res, next) => {
     if (!decoded)
       return res
         .status(401)
-        .json({ message: "Unauthorized - No Token Provided" });
+        .json({ message: "Unauthorized - Token Not Verified" });
 
     const user = await User.findById(decoded.user_id).select("-password");
 

@@ -71,6 +71,7 @@ export const signup = async (req, res) => {
 // Login controller
 export const login = async (req, res) => {
   try {
+    if (req.user) return res.status(200).json(req.user);
     // Extract username and password from request body
     const { username, password } = req.body;
 
