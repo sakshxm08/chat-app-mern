@@ -10,10 +10,11 @@ import Navbar from "./components/Navbar";
 import Signup from "./pages/Signup";
 import { Toaster } from "react-hot-toast";
 import useAuthContext from "./hooks/useAuthContext";
+import MessageSection from "./components/MessageSection";
 
 const App = () => {
   const Auth = useAuthContext();
-
+  const Conversations = useAuthContext();
   const router = createBrowserRouter([
     {
       path: "/",
@@ -22,6 +23,7 @@ const App = () => {
         {
           path: "",
           element: Auth.user ? <Home /> : <Navigate to="/login" />,
+          children: [{ path: "m/:contact_id", element: <MessageSection /> }],
         },
         {
           path: "signup",
@@ -36,7 +38,11 @@ const App = () => {
   ]);
   return (
     <div className="min-h-screen min-w-screen bg-slate-200 dark:bg-slate-700 flex items-center justify-center">
-      <RouterProvider router={router} />
+      {Auth.loading || Conversations.loading ? (
+        <span className="loading loading-spinner dark:bg-white loading-lg"></span>
+      ) : (
+        <RouterProvider router={router} />
+      )}
       <Toaster />
     </div>
   );

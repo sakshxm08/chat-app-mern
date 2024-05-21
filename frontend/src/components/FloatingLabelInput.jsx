@@ -28,7 +28,7 @@ const FloatingLabelInput = ({
         id={id}
         value={value}
         onChange={onChange}
-        className="w-full block leading-5 relative pt-4 pb-2 text-gray-800  dark:bg-dark border-b border-gray-300 focus:border-gray-500 dark:border-gray-400 overflow-x-auto focus:outline-none focus:border-primary-600 focus:ring-0 dark:text-gray-200 dark:focus:border-primary-200 peer text-sm"
+        className="w-full block leading-5 relative pt-4 pb-2 text-gray-800  bg-transparent border-b border-gray-300 focus:border-gray-500 dark:border-gray-400 overflow-x-auto focus:outline-none focus:border-primary-600 focus:ring-0 dark:text-gray-200 dark:focus:border-primary-200 peer text-sm"
         placeholder=" "
         required
       />

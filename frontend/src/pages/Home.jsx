@@ -1,4 +1,5 @@
-import MessageSection from "../components/MessageSection";
+import { Outlet } from "react-router-dom";
+// import MessageSection from "../components/MessageSection";
 import Sidebar from "../components/Sidebar";
 
 const Home = () => {
@@ -8,7 +9,8 @@ const Home = () => {
         <Sidebar />
       </div>
       <div className="w-3/4 h-full">
-        <MessageSection />
+        {/* <MessageSection /> */}
+        <Outlet />
       </div>
     </div>
   );
