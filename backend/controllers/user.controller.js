@@ -1,3 +1,4 @@
+import Conversation from "../models/conversation.model.js";
 import User from "../models/user.model.js";
 
 export const get_contacts = async (req, res) => {
@@ -8,7 +9,36 @@ export const get_contacts = async (req, res) => {
       _id: { $ne: logged_in_user_id },
     }).select("-password");
 
-    res.status(200).json(contacts);
+    const conversations = await Conversation.find({
+      participants: logged_in_user_id,
+    }).populate({
+      path: "messages",
+      options: { sort: { createdAt: -1 }, limit: 1 },
+    });
+
+    const latest_messages_map = new Map();
+
+    conversations.forEach((conversation) => {
+      const other_participant = conversation.participants.find(
+        (participant_id) =>
+          participant_id.toString() !== logged_in_user_id.toString()
+      );
+      if (conversation.messages.length > 0) {
+        latest_messages_map.set(
+          other_participant.toString(),
+          conversation.messages[0]
+        );
+      }
+    });
+
+    const contacts_with_latest_message = contacts.map((contact) => {
+      const contact_obj = contact.toObject();
+      contact_obj.latest_message =
+        latest_messages_map.get(contact._id.toString()) || null;
+      return contact_obj;
+    });
+
+    res.status(200).json(contacts_with_latest_message);
   } catch (error) {
     // Log and return internal server error response
     console.log("Error in Get Contacts Controller: " + error.message);
