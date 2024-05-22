@@ -131,13 +131,13 @@ const Signup = () => {
                 </span>
               </div>
               <div
-                className={`bg-white dark:bg-slate-700 shadow absolute w-full top-full ${
+                className={`bg-white dark:bg-gray-700 shadow absolute w-full top-full ${
                   dropdownOpen ? "scale-y-100" : "scale-y-0"
                 } transition-all origin-top flex flex-col *:p-3 *:text-sm *:transition-all *:cursor-pointer`}
               >
                 <label
                   htmlFor="male"
-                  className="hover:bg-base-200 dark:hover:bg-slate-600 transition-all"
+                  className="hover:bg-base-200 dark:hover:bg-gray-600 transition-all"
                 >
                   <input
                     type="radio"
@@ -154,7 +154,7 @@ const Signup = () => {
                 </label>
                 <label
                   htmlFor="female"
-                  className="hover:bg-base-200 dark:hover:bg-slate-600 transition-all"
+                  className="hover:bg-base-200 dark:hover:bg-gray-600 transition-all"
                 >
                   <input
                     type="radio"
@@ -171,7 +171,7 @@ const Signup = () => {
                 </label>
                 <label
                   htmlFor="other"
-                  className="hover:bg-base-200 dark:hover:bg-slate-600 transition-all"
+                  className="hover:bg-base-200 dark:hover:bg-gray-600 transition-all"
                 >
                   <input
                     type="radio"
@@ -189,7 +189,7 @@ const Signup = () => {
               </div>
             </div>
             <button
-              className="bg-lime-600 dark:bg-lime-700 w-full col-span-2 rounded-lg py-3 text-sm text-white hover:bg-lime-700 transition-all"
+              className="bg-primary-500 dark:bg-primary-400 text-white hover:bg-primary-600 dark:hover:bg-primary-500 w-full col-span-2 rounded-lg py-3 text-sm transition-all"
               disabled={isLoading}
             >
               {isLoading ? (

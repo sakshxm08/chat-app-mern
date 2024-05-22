@@ -63,7 +63,7 @@ const Login = () => {
 
             <button
               disabled={isLoading}
-              className="bg-lime-600 dark:bg-lime-700 w-full col-span-2 rounded-lg py-3 text-sm text-white hover:bg-lime-700 transition-all"
+              className="bg-primary-500 dark:bg-primary-400 text-white hover:bg-primary-600 dark:hover:bg-primary-500 w-full col-span-2 rounded-lg py-3 text-sm transition-all"
             >
               {isLoading ? (
                 <span className="loading loading-spinner loading-sm"></span>

@@ -31,7 +31,7 @@ const MessageInput = () => {
         onChange={(e) => setMessage(e.target.value)} // Update message state as input value changes
       ></textarea>
       {/* Send button */}
-      <button className="flex items-center justify-center w-12 rounded-xl bg-lime-600 dark:bg-lime-700 aspect-square text-white hover:bg-lime-700 dark:hover:bg-lime-800 transition-all cursor-pointer">
+      <button className="flex items-center justify-center w-12 rounded-xl aspect-square bg-primary-500 dark:bg-primary-400 text-white hover:bg-primary-600 dark:hover:bg-primary-500 transition-all cursor-pointer">
         {/* Render send icon or loading spinner based on loading state */}
         {isLoading ? (
           <span className="loading loading-spinner"></span> // Loading spinner

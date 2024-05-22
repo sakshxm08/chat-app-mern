@@ -18,8 +18,8 @@ const ContactPreview = ({ contact }) => {
       to={`/m/${contact._id}`}
       className={({ isActive }) =>
         (isActive
-          ? "dark:bg-slate-900/60 bg-base-300/60"
-          : "hover:bg-base-200/60 dark:hover:bg-slate-900/30") +
+          ? "dark:bg-gray-900/60 bg-base-300/60"
+          : "hover:bg-base-200/60 dark:hover:bg-gray-900/30") +
         " px-3 xl:px-6 py-3 dark:text-gray-100 transition-all flex gap-4 items-center cursor-pointer "
       }
     >

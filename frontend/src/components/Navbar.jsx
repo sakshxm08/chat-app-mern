@@ -1,3 +1,4 @@
+import { logoWithText } from "../assets/assets";
 import useAuthContext from "../hooks/useAuthContext";
 import useLogout from "../hooks/useLogout";
 import ThemeController from "./ThemeController";
@@ -9,7 +10,8 @@ const Navbar = () => {
   return (
     <div className="navbar bg-base-100 px-4 rounded-xl shadow dark:text-gray-100 dark:bg-dark">
       <div className="flex-1">
-        <a className="text-xl font-semibold">Buzz</a>
+        {/* <a className="text-xl font-semibold">Buzz</a> */}
+        <img src={logoWithText} alt="" className="h-8" />
       </div>
       <div className="flex-none gap-4">
         <ThemeController />
@@ -39,14 +41,14 @@ const Navbar = () => {
                 </div>
               </div>
               <div className="py-2">
-                {/* <li className="dark:hover:bg-slate-900 transition-all rounded-lg">
+                {/* <li className="dark:hover:bg-gray-900 transition-all rounded-lg">
                   <a className="justify-between">Profile</a>
                 </li>
-                <li className="dark:hover:bg-slate-900 transition-all rounded-lg">
+                <li className="dark:hover:bg-gray-900 transition-all rounded-lg">
                   <a>Settings</a>
                 </li> */}
                 <li
-                  className="dark:hover:bg-slate-900 transition-all rounded-lg"
+                  className="dark:hover:bg-gray-900 transition-all rounded-lg"
                   onClick={logout}
                 >
                   <div>Logout</div>

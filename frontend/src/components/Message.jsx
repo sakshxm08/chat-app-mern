@@ -16,7 +16,7 @@ const Message = ({ message }) => {
 
   // Determine chat bubble color based on message sender
   const chatBubbleColor = sent
-    ? "bg-lime-600 dark:bg-lime-700 text-white"
+    ? "bg-primary-500 dark:bg-primary-400 text-white"
     : "bg-white dark:bg-dark text-black dark:text-gray-100";
 
   // Determine time color based on message sender

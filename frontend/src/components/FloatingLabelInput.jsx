@@ -18,9 +18,8 @@ const FloatingLabelInput = ({
   // Function to toggle password visibility
   const togglePass = () => {
     setPasswordHidden(!passwordHidden); // Toggle password visibility state
-    if (passwordHidden)
-      inputRef.current.type =
-        "text"; // If password is hidden, change input type to text
+    if (passwordHidden) inputRef.current.type = "text";
+    // If password is hidden, change input type to text
     else inputRef.current.type = "password"; // If password is visible, change input type to password
   };
 

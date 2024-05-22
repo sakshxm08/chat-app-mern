@@ -127,7 +127,7 @@ const MessageSection = memo(() => {
         </div>
       ) : (
         // Display messages when loading is complete
-        <div className="rounded-xl bg-base-200 dark:bg-slate-700 text-sm h-ful">
+        <div className="rounded-xl bg-base-200 dark:bg-gray-700 text-sm h-ful">
           {/* Message container */}
           <div
             ref={messageEl}

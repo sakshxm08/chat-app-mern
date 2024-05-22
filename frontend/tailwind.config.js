@@ -5,7 +5,20 @@ export default {
   theme: {
     extend: {
       backgroundColor: {
-        dark: "rgb(30 41 59)",
+        dark: "rgb(31 41 55)",
+        primary: {
+          50: "#fff4ed",
+          100: "#ffe5d4",
+          200: "#ffc7a9",
+          300: "#ff9f72",
+          400: "#fe6c39",
+          500: "#fd5526",
+          600: "#ee2b08",
+          700: "#c51c09",
+          800: "#9c1810",
+          900: "#7e1710",
+          950: "#440706",
+        },
       },
     },
   },

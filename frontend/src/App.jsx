@@ -37,7 +37,7 @@ const App = () => {
     },
   ]);
   return (
-    <div className="min-h-screen min-w-screen bg-slate-200 dark:bg-slate-700 flex items-center justify-center">
+    <div className="min-h-screen min-w-screen bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
       {Auth.loading || Conversations.loading ? (
         <span className="loading loading-spinner dark:bg-white loading-lg"></span>
       ) : (
