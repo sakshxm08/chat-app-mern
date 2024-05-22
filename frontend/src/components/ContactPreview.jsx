@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import useSocketContext from "../hooks/useSocketContext";
+import TimeStamp from "./TimeStamp";
 const ContactPreview = ({ contact }) => {
   const Socket = useSocketContext();
 
@@ -21,13 +22,15 @@ const ContactPreview = ({ contact }) => {
           <h4 className="font-normal md:text-sm lg:text-base">
             {contact.f_name} {contact.l_name}
           </h4>
-          <span className="text-[10px] xl:text-xs ">2:30</span>
+          {contact.latest_message && (
+            <TimeStamp time={contact.latest_message.createdAt} />
+          )}
         </div>
-        <p className="truncate text-sm text-gray-400 dark:text-gray-500 ">
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tenetur
-          minus earum modi magni natus pariatur, quidem et quaerat alias
-          blanditiis.
-        </p>
+        {contact.latest_message && (
+          <p className="truncate text-sm text-gray-400 dark:text-gray-500 ">
+            {contact.latest_message.message}
+          </p>
+        )}
       </div>
     </Link>
   );
