@@ -2,62 +2,74 @@ import Conversation from "../models/conversation.model.js";
 import Message from "../models/message.model.js";
 import { get_receiver_socket_id, io } from "../socket/socket.js";
 
+// Controller for sending a message
 export const send_message = async (req, res) => {
   try {
-    const { message } = req.body;
-    const { receiver_id } = req.params;
-    const sender_id = req.user._id;
+    const { message } = req.body; // Extract message content from request body
+    const { receiver_id } = req.params; // Extract receiver ID from request parameters
+    const sender_id = req.user._id; // Extract sender ID from authenticated user
 
+    // Check if a conversation already exists between the sender and receiver
     let conversation = await Conversation.findOne({
       participants: { $all: [sender_id, receiver_id] },
     });
 
+    // If no conversation exists, create a new one
     if (!conversation) {
       conversation = new Conversation({
         participants: [sender_id, receiver_id],
       });
     }
 
+    // Create a new message document
     const new_message = new Message({
       sender_id,
       receiver_id,
       message,
     });
 
+    // If the message is created, push it to the conversation's messages array
     if (new_message) {
       conversation.messages.push(new_message._id);
     }
 
+    // Save both the conversation and the new message
     await Promise.all([conversation.save(), new_message.save()]);
 
+    // Get the receiver's socket ID and emit the new message via WebSocket if they are connected
     const receiver_socket_id = get_receiver_socket_id(receiver_id);
-
-    if (receiver_socket_id)
+    if (receiver_socket_id) {
       io.to(receiver_socket_id).emit("new_message", new_message);
+    }
 
+    // Respond with the created message
     res.status(201).json(new_message);
   } catch (error) {
-    // Log and return internal server error response
+    // Log error and respond with internal server error
     console.log("Error in Send Message Controller: " + error.message);
     return res.status(501).json({ message: "Internal Server Error" });
   }
 };
 
+// Controller for retrieving messages between the sender and receiver
 export const get_messages = async (req, res) => {
   try {
-    const { receiver_id } = req.params;
-    const sender_id = req.user._id;
+    const { receiver_id } = req.params; // Extract receiver ID from request parameters
+    const sender_id = req.user._id; // Extract sender ID from authenticated user
 
+    // Find the conversation between the sender and receiver and populate the messages
     const conversation = await Conversation.findOne({
       participants: { $all: [sender_id, receiver_id] },
-    }).populate("messages"); // not reference, but actual messages (MongoDB automatically retreives messages from their stored IDs)
+    }).populate("messages"); // Automatically retrieve messages from their stored IDs
 
+    // If no conversation is found, return an empty array
     if (!conversation) return res.status(200).json([]);
 
+    // Respond with the messages array
     const messages = conversation.messages;
     return res.status(200).json(messages);
   } catch (error) {
-    // Log and return internal server error response
+    // Log error and respond with internal server error
     console.log("Error in Get Message Controller: " + error.message);
     return res.status(501).json({ message: "Internal Server Error" });
   }

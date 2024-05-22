@@ -1,13 +1,14 @@
+// Import necessary modules
 import express from "express";
 import { login, logout, signup } from "../controllers/auth.controller.js";
-import { verify_token } from "../middlewares/verify_token.js";
 
+// Create router instance
 const router = express.Router();
 
-router.post("/login", login);
+// Define routes for authentication
+router.post("/login", login); // Route for user login
+router.post("/signup", signup); // Route for user signup
+router.post("/logout", logout); // Route for user logout
 
-router.post("/signup", signup);
-
-router.post("/logout", logout);
-
+// Export the router
 export default router;

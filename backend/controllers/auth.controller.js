@@ -43,35 +43,32 @@ export const signup = async (req, res) => {
       avatar,
     });
 
-    // If the new user object is created successfully, proceed to save and return response
-    if (new_user) {
-      // Generate JWT token and set it in cookies
-      generate_token_and_set_cookie(new_user._id, res);
+    // Save the new user to the database
+    await new_user.save();
 
-      // Save the new user to the database
-      await new_user.save();
+    // Generate JWT token and set it in cookies
+    generate_token_and_set_cookie(new_user._id, res);
 
-      // Remove the password field from the user object before returning the response
-      new_user.password = undefined;
+    // Remove the password field from the user object before returning the response
+    new_user.password = undefined;
 
-      // Send success response with user details
-      return res
-        .status(201)
-        .json({ message: "User created successfully", user: new_user });
-    } else {
-      return res.status(400).json({ message: "Invalid user data" });
-    }
+    // Send success response with user details
+    return res
+      .status(201)
+      .json({ message: "User created successfully", user: new_user });
   } catch (error) {
     // Log and return internal server error response
     console.log("Error in Signup Controller: " + error.message);
-    return res.status(501).json({ message: "Internal Server Error" });
+    return res.status(500).json({ message: "Internal Server Error" });
   }
 };
 
 // Login controller
 export const login = async (req, res) => {
   try {
+    // Check if user is already authenticated
     if (req.user) return res.status(200).json(req.user);
+
     // Extract username and password from request body
     const { username, password } = req.body;
 
@@ -101,7 +98,7 @@ export const login = async (req, res) => {
   } catch (error) {
     // Log and return internal server error response
     console.log("Error in Login Controller: " + error.message);
-    return res.status(501).json({ message: "Internal Server Error" });
+    return res.status(500).json({ message: "Internal Server Error" });
   }
 };
 
@@ -116,6 +113,6 @@ export const logout = (req, res) => {
   } catch (error) {
     // Log and return internal server error response
     console.log("Error in Logout Controller: " + error.message);
-    return res.status(501).json({ message: "Internal Server Error" });
+    return res.status(500).json({ message: "Internal Server Error" });
   }
 };
