@@ -100,7 +100,7 @@ const MessageSection = memo(() => {
           >
             {sortedDates?.map((date) => (
               <div key={date}>
-                <div className="rounded-md py-2 px-3 text-xs mx-auto w-fit bg-gray-500 text-white dark:bg-dark dark:text-gray-200">
+                <div className="rounded-md mb-2 py-2 px-3 text-xs mx-auto w-fit bg-gray-500 text-white dark:bg-dark dark:text-gray-200">
                   {date}
                 </div>
                 {Conversation.messagesByDates[date]?.map((message) => (
