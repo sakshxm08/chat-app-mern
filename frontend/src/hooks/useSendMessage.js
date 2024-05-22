@@ -25,6 +25,10 @@ const useSendMessage = () => {
         type: "SEND_AND_RECEIVE_MESSAGE",
         payload: res.data,
       });
+      Conversation.dispatch({
+        type: "UPDATE_LATEST_MESSAGE",
+        payload: res.data,
+      });
 
       return true; // Returning true to indicate successful message sending
     } catch (error) {

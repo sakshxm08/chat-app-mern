@@ -11,6 +11,19 @@ export const ConversationReducer = (state, action) => {
         ),
       }; // Set the selected contact based on the provided ID
     }
+    case "UPDATE_LATEST_MESSAGE": {
+      return {
+        ...state,
+        contacts: state?.contacts.map((contact) => {
+          if (
+            contact._id === action.payload.sender_id ||
+            contact._id === action.payload.receiver_id
+          ) {
+            return { ...contact, latest_message: action.payload };
+          } else return contact;
+        }),
+      };
+    }
     case "SET_MESSAGES": {
       // Update messages, messagesByDates, selectedContact, and contacts with provided messages
       const messages = action.payload.messages;

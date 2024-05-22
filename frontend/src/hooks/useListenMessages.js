@@ -16,6 +16,10 @@ const useListenMessages = () => {
         type: "SEND_AND_RECEIVE_MESSAGE",
         payload: newMessage,
       });
+      Conversation.dispatch({
+        type: "UPDATE_LATEST_MESSAGE",
+        payload: newMessage,
+      });
     };
 
     // Checking if the socket is available
