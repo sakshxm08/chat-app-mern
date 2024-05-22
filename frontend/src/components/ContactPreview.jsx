@@ -1,12 +1,18 @@
+// Import necessary modules and components
 import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
-import useSocketContext from "../hooks/useSocketContext";
-import TimeStamp from "./TimeStamp";
+import useSocketContext from "../hooks/useSocketContext"; // Custom hook to access socket context
+import TimeStamp from "./TimeStamp"; // Component to display timestamp
+
+// ContactPreview component definition
 const ContactPreview = ({ contact }) => {
+  // Access socket context using custom hook
   const Socket = useSocketContext();
 
+  // Check if contact is online based on their ID
   const isOnline = Socket.onlineUsers.includes(contact._id);
 
+  // JSX rendering
   return (
     <NavLink
       to={`/m/${contact._id}`}
@@ -41,8 +47,10 @@ const ContactPreview = ({ contact }) => {
   );
 };
 
-export default ContactPreview;
-
+// Define prop types for ContactPreview component
 ContactPreview.propTypes = {
-  contact: PropTypes.object,
+  contact: PropTypes.object, // Contact prop should be an object
 };
+
+// Export ContactPreview component
+export default ContactPreview;
