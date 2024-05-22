@@ -11,7 +11,7 @@ const Sidebar = () => {
           3 New
         </span>
       </div>
-      <div className="h-full overflow-scroll">
+      <div className="h-full overflow-auto">
         {Conversations.contacts.map((contact) => (
           <ContactPreview key={contact._id} contact={contact} />
         ))}
