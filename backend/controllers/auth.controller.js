@@ -116,3 +116,18 @@ export const logout = (req, res) => {
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };
+
+// Login on Refresh controller
+export const refresh = (req, res) => {
+  try {
+    // Extract user details set by the verify_token middleware
+    const user = req.user;
+
+    // Send success response
+    return res.status(200).json(user);
+  } catch (error) {
+    // Log and return internal server error response
+    console.log("Error in Refresh Controller: " + error.message);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+};

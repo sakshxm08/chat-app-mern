@@ -19,7 +19,7 @@ export const AuthContextProvider = ({ children }) => {
     const loginOnPageLoad = async () => {
       try {
         // Fetch user data from the server
-        const res = await api.post("/auth/login");
+        const res = await api.get("/auth/refresh");
         // Dispatching action to update state with user data upon successful login
         dispatch({ type: "LOGIN", payload: res.data });
       } catch (error) {
