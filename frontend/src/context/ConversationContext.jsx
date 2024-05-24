@@ -28,7 +28,7 @@ export const ConversationContextProvider = ({ children }) => {
     const getAllContacts = async () => {
       try {
         // Fetching all contacts from the server
-        const res = await api.get("/users");
+        const res = await api.get("/contacts");
         // Dispatching action to update state with all contacts
         dispatch({ type: "SET_ALL_CONTACTS", payload: res.data });
         // Preloading images to improve performance

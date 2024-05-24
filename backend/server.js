@@ -25,7 +25,7 @@ app.use(express.json()); // Parse incoming requests with JSON payloads (for req.
 // Route handlers setup
 app.use("/api/auth", authRoutes); // Authentication routes
 app.use("/api/messages", messageRoutes); // Message routes
-app.use("/api/users", userRoutes); // User routes
+app.use("/api/contacts", userRoutes); // User routes
 
 // Serve static files from the frontend build directory
 app.use(express.static(path.join(__dirname, "/frontend/dist")));

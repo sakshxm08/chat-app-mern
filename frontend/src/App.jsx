@@ -11,10 +11,11 @@ import Signup from "./pages/Signup";
 import { Toaster } from "react-hot-toast";
 import useAuthContext from "./hooks/useAuthContext";
 import MessageSection from "./components/MessageSection";
+import useConversationContext from "./hooks/useConversationContext";
 
 const App = () => {
   const Auth = useAuthContext();
-  const Conversations = useAuthContext();
+  const Conversation = useConversationContext();
   const router = createBrowserRouter([
     {
       path: "/",
@@ -38,7 +39,7 @@ const App = () => {
   ]);
   return (
     <div className="min-h-screen min-w-screen bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
-      {Auth.loading || Conversations.loading ? (
+      {Auth.loading || Conversation.loading ? (
         <span className="loading loading-spinner dark:bg-white loading-lg"></span>
       ) : (
         <RouterProvider router={router} />
