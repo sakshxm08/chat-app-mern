@@ -85,13 +85,24 @@ const MessageSection = memo(() => {
 
   // Effect to scroll to bottom when new messages are loaded
   useEffect(() => {
+    const scrollToBottom = () => {
+      if (messageEl.current) {
+        messageEl.current.scroll({ top: messageEl.current.scrollHeight });
+      }
+    };
+
+    const observer = new MutationObserver(scrollToBottom);
+    const config = { childList: true, subtree: true };
+
     if (messageEl.current) {
-      // Scroll to bottom of messages
-      messageEl.current.addEventListener("DOMNodeInserted", (event) => {
-        const { currentTarget: target } = event;
-        target.scroll({ top: target.scrollHeight });
-      });
+      observer.observe(messageEl.current, config);
     }
+
+    return () => {
+      if (messageEl) {
+        observer.disconnect();
+      }
+    };
   }, [Conversation.messages, contact_id, Conversation.messagesLoading]);
 
   // JSX rendering
