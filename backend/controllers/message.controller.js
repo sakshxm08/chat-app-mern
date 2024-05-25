@@ -74,3 +74,35 @@ export const get_messages = async (req, res) => {
     return res.status(501).json({ message: "Internal Server Error" });
   }
 };
+
+export const get_unread_messages = async (req, res) => {
+  try {
+    // Fetch all unread messages for the logged-in user
+    const unread_messages = await Message.find({
+      is_read: false,
+      receiver_id: req.user._id,
+    });
+
+    // Group the unread messages by receiver ID
+    const unread_messages_of_user = unread_messages.reduce((acc, message) => {
+      acc[message.sender_id] = acc[message.sender_id] || [];
+      acc[message.sender_id].push(message);
+      return acc;
+    }, {});
+    return res.status(200).json(unread_messages_of_user);
+  } catch (error) {
+    // Log error and respond with internal server error
+    console.log("Error in Get Unread Messages Controller: " + error.message);
+    return res.status(501).json({ message: "Internal Server Error" });
+  }
+};
+
+export const update_message_to_read = async ({ message_id }) => {
+  try {
+    // Update message status in the database to mark it as read
+    await Message.findByIdAndUpdate(message_id, { is_read: true });
+    // Emit an event to notify other clients about the updated message
+  } catch (error) {
+    console.error("Error marking message as read:", error);
+  }
+};

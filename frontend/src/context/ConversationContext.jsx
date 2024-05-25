@@ -28,11 +28,14 @@ export const ConversationContextProvider = ({ children }) => {
     const getAllContacts = async () => {
       try {
         // Fetching all contacts from the server
-        const res = await api.get("/contacts");
+        const contactsApiResponse = await api.get("/contacts");
+
         // Dispatching action to update state with all contacts
-        dispatch({ type: "SET_ALL_CONTACTS", payload: res.data });
+        dispatch({
+          type: "SET_ALL_CONTACTS",
+          payload: contactsApiResponse.data,
+        });
         // Preloading images to improve performance
-        preloadImages(res.data);
       } catch (error) {
         console.log(error); // Log any errors that occur during the fetch process
       } finally {
@@ -58,12 +61,4 @@ export const ConversationContextProvider = ({ children }) => {
 // PropTypes for the ConversationContextProvider component
 ConversationContextProvider.propTypes = {
   children: PropTypes.node, // children prop should be a React node
-};
-
-// Function to preload images for all contacts to improve performance
-const preloadImages = (contacts) => {
-  contacts.forEach((contact) => {
-    const img = new Image(); // Creating a new Image element
-    img.src = contact.avatar; // Setting the src attribute to preload the image
-  });
 };

@@ -21,6 +21,11 @@ const message_schema = new Schema(
       type: String,
       required: true,
     },
+    is_read: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
   },
   // Enable timestamps to automatically track createdAt and updatedAt fields
   { timestamps: true }

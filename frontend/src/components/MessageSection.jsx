@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom"; // Hook to access URL parameters
 import api from "../api/api"; // API module for making requests
 import Message from "./Message"; // Component for displaying messages
 import useListenMessages from "../hooks/useListenMessages"; // Custom hook for listening to new messages
+import useReadMessage from "../hooks/useReadMessage";
 
 // Memoized MessageSection component definition
 const MessageSection = memo(() => {
@@ -14,6 +15,8 @@ const MessageSection = memo(() => {
 
   // Listen for new messages
   useListenMessages();
+
+  useReadMessage();
 
   // State variable to store sorted message dates
   const [sortedDates, setSortedDates] = useState([]);
@@ -87,7 +90,9 @@ const MessageSection = memo(() => {
   useEffect(() => {
     const scrollToBottom = () => {
       if (messageEl.current) {
-        messageEl.current.scroll({ top: messageEl.current.scrollHeight });
+        messageEl.current.scrollTo({
+          top: messageEl.current.scrollHeight,
+        });
       }
     };
 
@@ -97,6 +102,9 @@ const MessageSection = memo(() => {
     if (messageEl.current) {
       observer.observe(messageEl.current, config);
     }
+
+    // Call scrollToBottom once initially to handle any pre-existing messages
+    scrollToBottom();
 
     return () => {
       if (messageEl) {

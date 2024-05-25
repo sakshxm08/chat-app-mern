@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import PropTypes from "prop-types";
 import relativeTime from "dayjs/plugin/relativeTime";
-const TimeStamp = ({ time }) => {
+const TimeStamp = ({ time, color }) => {
   dayjs.extend(relativeTime);
 
   const formatDate = (timestamp) => {
@@ -20,7 +20,7 @@ const TimeStamp = ({ time }) => {
     }
   };
   return (
-    <span className="text-[10px] xl:text-xs text-gray-500 dark:text-gray-300">
+    <span className={`text-[10px] xl:text-xs ${color}`}>
       {formatDate(new Date(time))}
     </span>
   );
@@ -30,4 +30,5 @@ export default TimeStamp;
 
 TimeStamp.propTypes = {
   time: PropTypes.string,
+  color: PropTypes.string,
 };

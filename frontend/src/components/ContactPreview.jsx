@@ -34,13 +34,27 @@ const ContactPreview = ({ contact }) => {
             {contact.f_name} {contact.l_name}
           </h4>
           {contact.latest_message && (
-            <TimeStamp time={contact.latest_message.createdAt} />
+            <TimeStamp
+              color={
+                contact?.unread_messages?.length > 0
+                  ? "text-primary-500 font-medium"
+                  : "text-gray-500 dark:text-gray-300"
+              }
+              time={contact.latest_message.createdAt}
+            />
           )}
         </div>
         {contact.latest_message && (
-          <p className="truncate text-sm text-gray-500 font-light ">
-            {contact.latest_message.message}
-          </p>
+          <div className="w-full flex justify-between items-center">
+            <p className="truncate text-sm text-gray-500 font-light ">
+              {contact.latest_message.message}
+            </p>
+            {contact?.unread_messages?.length > 0 && (
+              <span className="text-[10px] text-white bg-primary-500 p-px w-4 font-bold aspect-square rounded-full flex items-center justify-center">
+                {contact?.unread_messages?.length}
+              </span>
+            )}
+          </div>
         )}
       </div>
     </NavLink>

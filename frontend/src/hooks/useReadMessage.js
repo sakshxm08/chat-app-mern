@@ -1,25 +1,32 @@
 import useSocketContext from "./useSocketContext"; // Custom hook to access the socket context
 import useConversationContext from "./useConversationContext"; // Custom hook to access the conversation context
 import { useEffect } from "react"; // Importing the useEffect hook from React
+import { useParams } from "react-router-dom";
 
-const useListenMessages = () => {
+const useReadMessage = () => {
   // Accessing the socket context using useSocketContext hook
   const SocketContext = useSocketContext();
   // Accessing the conversation context using useConversationContext hook
   const Conversation = useConversationContext();
 
+  const { contact_id } = useParams();
+
   useEffect(() => {
     // Function to handle new incoming messages
-    const handleNewMessage = (newMessage) => {
-      // Dispatching an action to update the conversation context with the new message
-      Conversation.dispatch({
-        type: "SEND_AND_RECEIVE_MESSAGE",
-        payload: newMessage,
-      });
-      Conversation.dispatch({
-        type: "UPDATE_UNREAD_MESSAGES",
-        payload: newMessage,
-      });
+    const handleNewMessage = (message) => {
+      if (contact_id && message.sender_id === contact_id && !message.is_read) {
+        // Dispatching an action to update the conversation context with the new message
+        Conversation.dispatch({
+          type: "MARK_MESSAGE_AS_READ",
+          payload: { message, contact_id },
+        });
+        if (SocketContext.socket) {
+          // Emit to backend that the message is read
+          SocketContext.socket.emit("mark_message_as_read", {
+            message_id: message._id,
+          });
+        }
+      }
     };
 
     // Checking if the socket is available
@@ -38,4 +45,4 @@ const useListenMessages = () => {
   }, [SocketContext.socket, Conversation.dispatch]); // Dependency array ensures the effect runs when socket or conversation dispatch function changes
 };
 
-export default useListenMessages;
+export default useReadMessage;

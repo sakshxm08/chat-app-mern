@@ -2,7 +2,7 @@
 import PropTypes from "prop-types";
 import useAuthContext from "../hooks/useAuthContext"; // Custom hook to access authentication context
 import dayjs from "dayjs"; // Library for date and time formatting
-
+import useMarkMessagesAsRead from "../hooks/useMarkMessagesAsRead";
 // Message component definition
 const Message = ({ message }) => {
   // Access authentication context using custom hook
@@ -21,6 +21,9 @@ const Message = ({ message }) => {
 
   // Determine time color based on message sender
   const timeColor = sent ? "text-gray-200" : "text-gray-400";
+
+  // Mark Message As Read
+  useMarkMessagesAsRead(message);
 
   // JSX rendering
   return (

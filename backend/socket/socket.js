@@ -3,6 +3,7 @@ import { Server } from "socket.io";
 import http from "http";
 import express from "express";
 import dotenv from "dotenv";
+import { update_message_to_read } from "../controllers/message.controller.js";
 
 // Load environment variables from .env file
 dotenv.config();
@@ -44,6 +45,8 @@ io.on("connection", (socket) => {
 
   // Emit event to get online users and send their IDs
   io.emit("get_online_users", Object.keys(users_socket));
+
+  socket.on("mark_message_as_read", update_message_to_read);
 
   // Handle disconnection
   socket.on("disconnect", () => {

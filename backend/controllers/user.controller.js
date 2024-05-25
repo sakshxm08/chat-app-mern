@@ -1,20 +1,19 @@
 // Import necessary models
 import Conversation from "../models/conversation.model.js";
+import Message from "../models/message.model.js";
 import User from "../models/user.model.js";
 
 // Controller to get all contacts for the logged-in user along with the latest message exchanged
 export const get_contacts = async (req, res) => {
   try {
-    // Get the logged-in user's ID from the request object
     const logged_in_user_id = req.user._id;
 
-    // Find all users excluding the logged-in user, and exclude the password field from the result
+    // Find all users excluding the logged-in user
     const contacts = await User.find({
       _id: { $ne: logged_in_user_id },
     }).select("-password");
 
-    // Find all conversations that include the logged-in user, populate the messages field,
-    // and sort messages by creation date in descending order, limiting to the latest message
+    // Find all conversations that include the logged-in user
     const conversations = await Conversation.find({
       participants: logged_in_user_id,
     }).populate({
@@ -22,38 +21,48 @@ export const get_contacts = async (req, res) => {
       options: { sort: { createdAt: -1 }, perDocumentLimit: 1 },
     });
 
-    // Create a map to store the latest message for each contact
-    const latest_messages_map = new Map();
+    // Find all unread messages for the logged-in user
+    const unread_messages = await Message.find({
+      is_read: false,
+      receiver_id: logged_in_user_id,
+    });
 
-    // Iterate over each conversation to extract the latest message
+    // Group the unread messages by sender ID
+    const unread_messages_of_user = unread_messages.reduce((acc, message) => {
+      acc[message.sender_id] = acc[message.sender_id] || [];
+      acc[message.sender_id].push(message);
+      return acc;
+    }, {});
+
+    // Create a map to store the latest message for each contact
+    const latestMessagesMap = new Map();
+
     conversations.forEach((conversation) => {
-      // Find the other participant in the conversation
-      const other_participant = conversation.participants.find(
+      const otherParticipant = conversation.participants.find(
         (participant_id) =>
           participant_id.toString() !== logged_in_user_id.toString()
       );
 
-      // If the conversation has messages, set the latest message in the map
       if (conversation.messages.length > 0) {
-        latest_messages_map.set(
-          other_participant.toString(),
+        latestMessagesMap.set(
+          otherParticipant.toString(),
           conversation.messages[0]
         );
       }
     });
 
-    // Map over each contact and add the latest message to the contact object
-    const contacts_with_latest_message = contacts.map((contact) => {
-      const contact_obj = contact.toObject();
-      contact_obj.latest_message =
-        latest_messages_map.get(contact._id.toString()) || null;
-      return contact_obj;
+    // Map over each contact and add the latest message and unread messages to the contact object
+    const contactsWithDetails = contacts.map((contact) => {
+      const contactObj = contact.toObject();
+      contactObj.latest_message =
+        latestMessagesMap.get(contact._id.toString()) || null;
+      contactObj.unread_messages =
+        unread_messages_of_user[contact._id.toString()] || [];
+      return contactObj;
     });
 
-    // Send the modified contacts list as a JSON response
-    res.status(200).json(contacts_with_latest_message);
+    res.status(200).json(contactsWithDetails);
   } catch (error) {
-    // Log any errors and return an internal server error response
     console.log("Error in Get Contacts Controller: " + error.message);
     return res.status(501).json({ message: "Internal Server Error" });
   }

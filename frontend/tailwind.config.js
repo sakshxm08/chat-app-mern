@@ -6,6 +6,8 @@ export default {
     extend: {
       backgroundColor: {
         dark: "rgb(31 41 55)",
+      },
+      colors: {
         primary: {
           50: "#fff4ed",
           100: "#ffe5d4",
@@ -22,6 +24,12 @@ export default {
       },
     },
   },
+  safelist: [
+    "text-primary-500",
+    "font-medium",
+    "text-gray-500",
+    "dark:text-gray-300",
+  ],
   // eslint-disable-next-line no-undef
   plugins: [require("daisyui")],
 };
