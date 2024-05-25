@@ -47,6 +47,8 @@ export const ConversationContextProvider = ({ children }) => {
     // Fetch contacts only if the user is authenticated
     if (Auth.user) {
       getAllContacts(); // Calling the getAllContacts function to fetch contacts
+    } else {
+      dispatch({ type: "SET_LOADING", payload: false });
     }
   }, [Auth.user]); // Dependency array ensures this effect runs when the user changes
 

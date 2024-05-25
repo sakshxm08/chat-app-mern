@@ -24,15 +24,16 @@ export const checkPasswordLength = (password) => {
 };
 
 // Function to check if passwords match
-export const handlePasswordsMatch = (password, confPassword) => {
-  if (password !== confPassword) {
+export const handlePasswordsMatch = (password, conf_password) => {
+  console.log(password, conf_password);
+  if (password !== conf_password) {
     toast.error("Passwords do not match.");
     return false;
   }
   return true;
 };
 
-export const validatePassword = (password, confPassword) => {
+export const validatePassword = (password, conf_password) => {
   if (!checkPasswordLength(password)) return false;
-  return handlePasswordsMatch(password, confPassword);
+  return handlePasswordsMatch(password, conf_password);
 };

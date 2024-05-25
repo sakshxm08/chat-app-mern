@@ -24,13 +24,18 @@ export const AuthContextProvider = ({ children }) => {
         dispatch({ type: "LOGIN", payload: res.data });
       } catch (error) {
         console.log(error); // Log any errors that occur during the login process
+        dispatch({ type: "LOGOUT" });
       } finally {
         // Dispatching action to update loading state to false after login attempt
         dispatch({ type: "SET_LOADING", payload: false });
       }
     };
     // Calling the loginOnPageLoad function when the component mounts
-    loginOnPageLoad();
+    if (localStorage.getItem("session")) {
+      loginOnPageLoad();
+    } else {
+      dispatch({ type: "SET_LOADING", payload: false });
+    }
   }, []); // Empty dependency array ensures this effect runs only once on component mount
 
   // Providing the AuthContext.Provider with the authentication state and dispatch function

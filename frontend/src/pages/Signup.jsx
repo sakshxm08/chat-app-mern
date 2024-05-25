@@ -98,7 +98,7 @@ const Signup = () => {
               type="password"
               name="conf_password"
               id="conf_password"
-              label="Confirrm Password"
+              label="Confirm Password"
               className="col-span-2"
               inputRef={conf_pass_input}
               passwordHidden={confPassHidden}

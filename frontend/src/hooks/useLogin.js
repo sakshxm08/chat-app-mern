@@ -23,6 +23,8 @@ const useLogin = () => {
       // Handling error response
       if (res.data.error) throw new Error(res.data.error);
 
+      localStorage.setItem("session", true);
+
       // Dispatching action to update auth context with user data
       Auth.dispatch({ type: "LOGIN", payload: res.data.user });
     } catch (error) {

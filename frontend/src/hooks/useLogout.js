@@ -16,6 +16,8 @@ const useLogout = () => {
       // Handling error response
       if (res.data.error) throw new Error(res.data.error);
 
+      localStorage.removeItem("session");
+
       // Dispatching action to update auth context with logout status
       Auth.dispatch({ type: "LOGOUT" });
     } catch (error) {

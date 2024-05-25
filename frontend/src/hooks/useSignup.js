@@ -16,7 +16,7 @@ const useSignup = () => {
   const signup = async (details) => {
     // Validating user input
     if (!handleEmptyInputs(details)) return;
-    if (!validatePassword(details.password, details.confPassword)) return;
+    if (!validatePassword(details.password, details.conf_password)) return;
 
     setIsLoading(true); // Setting loading state to true
 
@@ -26,6 +26,8 @@ const useSignup = () => {
 
       // Handling error response
       if (res.data.error) throw new Error(res.data.error);
+
+      localStorage.setItem("session", true);
 
       // Dispatching action to update authentication context with user data
       Auth.dispatch({ type: "LOGIN", payload: res.data.user });
