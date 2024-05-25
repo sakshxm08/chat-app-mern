@@ -5,16 +5,12 @@ import MessageInput from "./MessageInput"; // Component for message input field
 import { useParams } from "react-router-dom"; // Hook to access URL parameters
 import api from "../api/api"; // API module for making requests
 import Message from "./Message"; // Component for displaying messages
-import useListenMessages from "../hooks/useListenMessages"; // Custom hook for listening to new messages
 import useReadMessage from "../hooks/useReadMessage";
 
 // Memoized MessageSection component definition
 const MessageSection = memo(() => {
   // Access conversation context using custom hook
   const Conversation = useConversationContext();
-
-  // Listen for new messages
-  useListenMessages();
 
   useReadMessage();
 
@@ -38,9 +34,14 @@ const MessageSection = memo(() => {
       Conversation.dispatch({ type: "SET_MESSAGES_LOADING", payload: true });
 
       // Check if messages for the selected contact are already loaded
+      const contactDetails = Conversation.contacts.find(
+        (contact) => contact._id === contact_id
+      );
+
       if (
-        !Conversation.contacts.find((contact) => contact._id === contact_id)
-          ?.messages
+        contactDetails?.messages?.length ===
+          contactDetails?.unread_messages?.length ||
+        !contactDetails?.messages
       ) {
         // If messages not loaded, fetch messages from the backend
         const res = await api.get(`/messages/${contact_id}`);
@@ -139,7 +140,10 @@ const MessageSection = memo(() => {
       </div>
 
       {/* Message loading or message display */}
-      {Conversation.messagesLoading ? (
+      {Conversation.messagesLoading ||
+      Conversation.selectedContact?.messages.length ===
+        Conversation.selectedContact?.unread_messages.length ||
+      !Conversation.selectedContact?.messages ? (
         // Display loading spinner while messages are loading
         <div className="h-full w-full items-center justify-center flex">
           <span className="loading loading-spinner dark:bg-white"></span>

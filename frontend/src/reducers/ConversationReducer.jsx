@@ -14,19 +14,26 @@ export const ConversationReducer = (state, action) => {
     case "SEND_AND_RECEIVE_MESSAGE": {
       const { sender_id, receiver_id } = action.payload;
       const isMessageForSelectedContact =
-        sender_id === state.selectedContact._id ||
-        receiver_id === state.selectedContact._id;
+        sender_id === state.selectedContact?._id ||
+        receiver_id === state.selectedContact?._id;
 
-      const updatedMessages = isMessageForSelectedContact
-        ? [...state.messages, action.payload]
-        : state.messages;
+      const updatedMessagesOfSelectedContact = isMessageForSelectedContact
+        ? [...state.selectedContact.messages, action.payload]
+        : state.selectedContact?.messages;
 
-      const messagesByDates = groupMessagesByDates(updatedMessages);
+      console.log(updatedMessagesOfSelectedContact);
+      const messagesByDates = groupMessagesByDates(
+        updatedMessagesOfSelectedContact || []
+      );
+      console.log(messagesByDates);
 
       const updatedContacts = state.contacts.map((contact) => {
         if (contact._id === sender_id || contact._id === receiver_id) {
           return {
             ...contact,
+            messages: contact.messages
+              ? [...contact.messages, action.payload]
+              : [action.payload],
             latest_message: action.payload,
           };
         }
@@ -35,14 +42,11 @@ export const ConversationReducer = (state, action) => {
 
       const updatedSelectedContact = {
         ...state.selectedContact,
-        messages: isMessageForSelectedContact
-          ? updatedMessages
-          : state.selectedContact.messages,
+        messages: updatedMessagesOfSelectedContact,
       };
 
       return {
         ...state,
-        messages: updatedMessages,
         messagesByDates,
         selectedContact: updatedSelectedContact,
         contacts: updatedContacts,
@@ -63,11 +67,15 @@ export const ConversationReducer = (state, action) => {
     }
     case "MARK_MESSAGE_AS_READ": {
       const { contact_id, message } = action.payload;
-      const updatedMessages = state.messages.map((msg) =>
-        msg.sender_id === contact_id && !msg.is_read && msg._id === message._id
-          ? { ...msg, is_read: true }
-          : msg
-      );
+      const updatedMessages = state.contacts
+        .find((contact) => contact._id === contact_id)
+        ?.messages.map((msg) =>
+          msg.sender_id === contact_id &&
+          !msg.is_read &&
+          msg._id === message._id
+            ? { ...msg, is_read: true }
+            : msg
+        );
 
       const messagesByDates = groupMessagesByDates(updatedMessages);
 
@@ -92,7 +100,6 @@ export const ConversationReducer = (state, action) => {
 
       return {
         ...state,
-        messages: updatedMessages,
         messagesByDates,
         contacts: updatedContacts,
         selectedContact: updatedSelectedContact,
@@ -107,32 +114,16 @@ export const ConversationReducer = (state, action) => {
         contact._id === contact_id ? { ...contact, messages } : contact
       );
 
-      const selectedContact = state.contacts.find(
-        (contact) => contact._id === contact_id
-      );
       const updatedSelectedContact = {
-        ...selectedContact,
+        ...state.selectedContact,
         messages,
       };
 
       return {
         ...state,
-        messages,
         messagesByDates,
         contacts: updatedContacts,
         selectedContact: updatedSelectedContact,
-      };
-    }
-    case "SET_MESSAGES_OF_CONTACT": {
-      const { messages, contact_id } = action.payload;
-
-      const updatedContacts = state.contacts.map((contact) =>
-        contact._id === contact_id ? { ...contact, messages } : contact
-      );
-
-      return {
-        ...state,
-        contacts: updatedContacts,
       };
     }
     case "SET_MESSAGES_LOADING": {

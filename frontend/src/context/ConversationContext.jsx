@@ -13,8 +13,7 @@ export const ConversationContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(ConversationReducer, {
     contacts: [], // Array to store all contacts
     selectedContact: null, // Currently selected contact
-    messages: [], // Array to store messages
-    messagesByDates: [], // Array to store messages grouped by dates
+    messagesByDates: {}, // Object to store messages grouped by dates
     messagesLoading: true, // Loading state to indicate whether messages are being loaded
     loading: true, // Loading state to indicate whether conversation data is being loaded
   });
@@ -45,11 +44,7 @@ export const ConversationContextProvider = ({ children }) => {
     };
 
     // Fetch contacts only if the user is authenticated
-    if (Auth.user) {
-      getAllContacts(); // Calling the getAllContacts function to fetch contacts
-    } else {
-      dispatch({ type: "SET_LOADING", payload: false });
-    }
+    getAllContacts(); // Calling the getAllContacts function to fetch contacts
   }, [Auth.user]); // Dependency array ensures this effect runs when the user changes
 
   // Providing the ConversationContext.Provider with the conversation state and dispatch function
